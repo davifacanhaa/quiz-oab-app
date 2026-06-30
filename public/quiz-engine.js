@@ -25,7 +25,8 @@ function fmtPhone(el){
 const __params = new URLSearchParams(window.location.search);
 const identity = {
   manychat_id: __params.get('mc') || __params.get('subscriber_id') || __params.get('contact_id') || null,
-  phone: normalizePhone(__params.get('phone') || __params.get('whatsapp') || ''),
+  // ManyChat manda o WhatsApp ID (campo whatsappid). Mantém phone/whatsapp como fallback.
+  phone: normalizePhone(__params.get('whatsappid') || __params.get('whatsapp_id') || __params.get('wa_id') || __params.get('phone') || __params.get('whatsapp') || ''),
   email: (__params.get('email') || '').trim().toLowerCase() || null,
   nome: __params.get('nome') || __params.get('name') || __params.get('first_name') || null,
   source: null,

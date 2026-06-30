@@ -57,16 +57,20 @@ empurradas ao ManyChat/ActiveCampaign depois.
 No botão/mensagem do ManyChat, monte a URL com os **merge fields** do contato:
 
 ```
-https://SEU-DOMINIO/?mc={{Contact Id}}&phone={{Phone}}&nome={{First Name}}
+https://SEU-DOMINIO/?mc={{Contact Id}}&whatsappid={{WhatsApp ID}}&email={{Email}}&nome={{First Name}}
 ```
+
+> Use o campo **WhatsApp ID** do ManyChat (não o campo "Phone", que costuma vir vazio em
+> contatos de WhatsApp). O WhatsApp ID já é o número com DDI (ex: `5585988887777`).
 
 Parâmetros aceitos (todos opcionais):
 
 - `mc` (ou `subscriber_id` / `contact_id`) → `manychat_id`
-- `phone` (ou `whatsapp`) → `phone` (normalizado só para dígitos)
+- `whatsappid` (ou `whatsapp_id` / `wa_id` / `phone` / `whatsapp`) → `phone` (normalizado para `+55…`)
+- `email` → `email`
 - `nome` (ou `name` / `first_name`) → `nome`
 
-**Fallback:** se o link vier sem `mc` e sem `phone`, o quiz mostra uma tela pedindo o WhatsApp
+**Fallback:** se o link vier sem `mc` e sem WhatsApp, o quiz mostra uma tela pedindo e-mail e WhatsApp
 antes de começar — assim ninguém fica sem identificação (depois é só cruzar pelo telefone com a
 sua lista de leads no Supabase).
 
