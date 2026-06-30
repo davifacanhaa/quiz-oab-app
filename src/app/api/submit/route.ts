@@ -8,6 +8,9 @@ export const dynamic = 'force-dynamic';
 interface SubmitBody {
   manychat_id?: string | null;
   phone?: string | null;
+  whatsappid?: string | null;
+  whatsapp_id?: string | null;
+  wa_id?: string | null;
   email?: string | null;
   nome?: string | null;
   source?: string | null;
@@ -40,7 +43,9 @@ function toWhatsAppId(v: unknown): string | null {
 function clean(v: unknown, max = 300): string | null {
   if (typeof v !== 'string') return null;
   const t = v.trim().slice(0, max);
-  return t.length ? t : null;
+  // descarta merge fields não-renderizados do ManyChat (ex: "{{FullName}}")
+  if (!t.length || /^\{\{.*\}\}$/.test(t)) return null;
+  return t;
 }
 
 /** Mantém só pares string/num/bool curtos e poucas chaves — evita gravar lixo grande. */
@@ -95,7 +100,7 @@ export async function POST(request: Request) {
 
   const row = {
     manychat_id: clean(body.manychat_id, 120),
-    phone: toWhatsAppId(body.phone),
+    phone: toWhatsAppId(body.whatsappid ?? body.whatsapp_id ?? body.wa_id ?? body.phone),
     email: clean(body.email, 160)?.toLowerCase() ?? null,
     nome: clean(body.nome, 120),
     source: clean(body.source, 40) ?? 'unknown',

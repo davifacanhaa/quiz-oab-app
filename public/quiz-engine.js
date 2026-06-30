@@ -23,12 +23,14 @@ function fmtPhone(el){
 }
 
 const __params = new URLSearchParams(window.location.search);
+// Ignora merge fields não-renderizados ({{...}}) e vazios — evita gravar "{{FullName}}" como lead.
+function pp(){for(let i=0;i<arguments.length;i++){const v=(arguments[i]||'').trim();if(v&&!/^\{\{.*\}\}$/.test(v))return v;}return null;}
 const identity = {
-  manychat_id: __params.get('mc') || __params.get('subscriber_id') || __params.get('contact_id') || null,
+  manychat_id: pp(__params.get('mc'), __params.get('subscriber_id'), __params.get('contact_id')),
   // ManyChat manda o WhatsApp ID (campo whatsappid). Mantém phone/whatsapp como fallback.
-  phone: normalizePhone(__params.get('whatsappid') || __params.get('whatsapp_id') || __params.get('wa_id') || __params.get('phone') || __params.get('whatsapp') || ''),
-  email: (__params.get('email') || '').trim().toLowerCase() || null,
-  nome: __params.get('nome') || __params.get('full_name') || __params.get('fullname') || __params.get('name') || __params.get('first_name') || null,
+  phone: normalizePhone(pp(__params.get('whatsappid'), __params.get('whatsapp_id'), __params.get('wa_id'), __params.get('phone'), __params.get('whatsapp')) || ''),
+  email: (function(){const e=pp(__params.get('email'));return e?e.toLowerCase():null;})(),
+  nome: pp(__params.get('nome'), __params.get('full_name'), __params.get('fullname'), __params.get('name'), __params.get('first_name')),
   source: null,
   raw_query: Object.fromEntries(__params.entries())
 };
