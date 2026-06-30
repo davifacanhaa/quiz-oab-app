@@ -28,7 +28,7 @@ const identity = {
   // ManyChat manda o WhatsApp ID (campo whatsappid). Mantém phone/whatsapp como fallback.
   phone: normalizePhone(__params.get('whatsappid') || __params.get('whatsapp_id') || __params.get('wa_id') || __params.get('phone') || __params.get('whatsapp') || ''),
   email: (__params.get('email') || '').trim().toLowerCase() || null,
-  nome: __params.get('nome') || __params.get('name') || __params.get('first_name') || null,
+  nome: __params.get('nome') || __params.get('full_name') || __params.get('fullname') || __params.get('name') || __params.get('first_name') || null,
   source: null,
   raw_query: Object.fromEntries(__params.entries())
 };

@@ -57,7 +57,7 @@ empurradas ao ManyChat/ActiveCampaign depois.
 No botão/mensagem do ManyChat, monte a URL com os **merge fields** do contato:
 
 ```
-https://SEU-DOMINIO/?mc={{Contact Id}}&whatsappid={{WhatsApp ID}}&email={{Email}}&nome={{First Name}}
+https://SEU-DOMINIO/?mc={{Contact Id}}&whatsappid={{WhatsApp ID}}&email={{Email}}&nome={{Full Name}}
 ```
 
 > Use o campo **WhatsApp ID** do ManyChat (não o campo "Phone", que costuma vir vazio em
@@ -68,7 +68,7 @@ Parâmetros aceitos (todos opcionais):
 - `mc` (ou `subscriber_id` / `contact_id`) → `manychat_id`
 - `whatsappid` (ou `whatsapp_id` / `wa_id` / `phone` / `whatsapp`) → `phone` (normalizado para `+55…`)
 - `email` → `email`
-- `nome` (ou `name` / `first_name`) → `nome`
+- `nome` (ou `full_name` / `fullname` / `name` / `first_name`) → `nome` (use **{{Full Name}}** no ManyChat)
 
 **Fallback:** se o link vier sem `mc` e sem WhatsApp, o quiz mostra uma tela pedindo e-mail e WhatsApp
 antes de começar — assim ninguém fica sem identificação (depois é só cruzar pelo telefone com a
